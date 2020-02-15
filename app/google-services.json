@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "293284357526",
+    "firebase_url": "https://lobby-system.firebaseio.com",
+    "project_id": "lobby-system",
+    "storage_bucket": "lobby-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293284357526:android:3392b086431f9bf30829b7",
+        "android_client_info": {
+          "package_name": "com.anfaas.lobbysystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293284357526-19bps61hoe4tomn8l1a26rnb92mb21p8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anfaas.lobbysystem",
+            "certificate_hash": "7b47cd202bda3a74b45243e725b7cadda1d786e0"
+          }
+        },
+        {
+          "client_id": "293284357526-cicq7eu73c8sjq6ln44in261o6absbm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqM0UgA4NrcFh8A5Hht7Gk6Ls_dBfdlec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293284357526-cicq7eu73c8sjq6ln44in261o6absbm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
