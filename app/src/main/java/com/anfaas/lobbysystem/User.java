@@ -1,5 +1,4 @@
 package com.anfaas.lobbysystem;
-
 public class User {
     private   String name,email,uid;
     public User(String name,String email,String uid)
@@ -7,8 +6,8 @@ public class User {
         this.name=name;
         this.email=email;
         this.uid=uid;
-
     }
+    //this is most important af otherwise app will crash idk wtf is wrong with firebase
     public  User()
     {
 

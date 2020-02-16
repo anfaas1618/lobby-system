@@ -10,6 +10,8 @@ public class LocalDatabase {
     int checkLogin;
     Context context;
 
+
+
     public LocalDatabase(String name, String email, String uid,Context context) {
         this.name = name;
         this.email = email;
@@ -27,7 +29,6 @@ public class LocalDatabase {
         SharedPreferences.Editor uid_edit = l_uid.edit();
         uid_edit.putString("UID",uid);
         uid_edit.commit();
-
     }
     public static void checkLogin(int check,Context context)
     {
@@ -35,6 +36,14 @@ public class LocalDatabase {
         SharedPreferences.Editor logincheck_edit=l_checklogin.edit();
         logincheck_edit.putInt("LOGINCHECK",check);
 
+    }
+//   public static String   getLocalName()
+//    {
+//        return l_name.getString("NAME","NULL");
+//    }
+   public static String   getLocalUid(Context context)
+    {   SharedPreferences l_uid = context.getSharedPreferences("UID",Context.MODE_PRIVATE );
+        return l_uid.getString("UID","NULL");
     }
 
 }
