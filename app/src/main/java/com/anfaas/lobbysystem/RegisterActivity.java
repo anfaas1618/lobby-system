@@ -36,9 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
       //firebase auth
       FirebaseAuth auth;
         //getting context
-      View view;
       Context context ;
-
+      TextView logintext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,14 @@ public class RegisterActivity extends AppCompatActivity {
         email=findViewById(R.id.txtEmail);
         password=findViewById(R.id.txtPwd);
         login=findViewById(R.id.btnLogin);
+        logintext=findViewById(R.id.lnkLogin);
           //on click on login button
+        logintext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
                                  User user=new User(firebaseUser.getDisplayName(),firebaseUser.getEmail(),firebaseUser.getUid());
                                  Toast.makeText(RegisterActivity.this, "registered", Toast.LENGTH_SHORT).show();
                                  myRef.child(firebaseUser.getUid().trim()).setValue(user);
-                                 localSave(firebaseUser.getUid().toString());
+                                 localSave(firebaseUser.getUid());
                                  //now login
-                              firebaseLogin();
+                                 firebaseLogin();
                              }
                          }
                      });
@@ -99,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             x=1;
-                         Intent intent=   new Intent(RegisterActivity.this,MainActivity.class);
+                         Intent intent=   new Intent(RegisterActivity.this,OnlineCheckLobby.class);
                          intent.putExtra("login",x);
                          startActivity(intent);
                         }
