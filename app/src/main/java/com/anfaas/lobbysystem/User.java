@@ -9,7 +9,10 @@ public class User {
         this.uid=uid;
 
     }
+    public  User()
+    {
 
+    }
     public String getName() {
         return name;
     }

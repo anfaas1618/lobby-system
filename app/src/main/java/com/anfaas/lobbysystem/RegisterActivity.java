@@ -81,10 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
                                  //set name in firebase user
                                  UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().
                                              setDisplayName(userName.getText().toString()).build();
-                                 assert firebaseUser != null;
+
                                  firebaseUser.updateProfile(profileUpdates);
                                  //saving information in user class
-                                 User user=new User(firebaseUser.getDisplayName(),firebaseUser.getEmail(),firebaseUser.getUid());
+                                 User user=new User(userName.getText().toString(),firebaseUser.getEmail(),firebaseUser.getUid());
                                  Toast.makeText(RegisterActivity.this, "registered", Toast.LENGTH_SHORT).show();
                                  myRef.child(firebaseUser.getUid().trim()).setValue(user);
                                  localSave(firebaseUser.getUid());
