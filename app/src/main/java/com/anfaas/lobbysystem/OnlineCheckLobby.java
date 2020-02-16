@@ -24,13 +24,16 @@ import com.google.firebase.database.ValueEventListener;
 public class OnlineCheckLobby extends AppCompatActivity {
 Button find,add,accept_req;
 EditText find_email;
-CardView user_found;
+CardView user_found,friend_request;
 TextView name_found,request_name;
 Handler mHandler;
     Context context ;
-    User user;
+    String friendUid;
+
 FirebaseDatabase database=FirebaseDatabase.getInstance();
 DatabaseReference myRef=database.getReference("Users");
+    FirebaseDatabase database1=FirebaseDatabase.getInstance();
+    DatabaseReference reference=database1.getReference("request");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ DatabaseReference myRef=database.getReference("Users");
         add=findViewById(R.id.add);
         accept_req=findViewById(R.id.request_accept_btn);
         request_name=findViewById(R.id.request_name);
+        friend_request =findViewById(R.id.request_friend);
+
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,9 +60,9 @@ DatabaseReference myRef=database.getReference("Users");
                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                        for (DataSnapshot snap:dataSnapshot.getChildren())
                        {
-                           user = snap.getValue(User.class);
+                           User user = snap.getValue(User.class);
                           if (user.getEmail().equals(find_email.getText().toString()))
-                          {
+                          {    friendUid=user.getUid();
                               Toast.makeText(OnlineCheckLobby.this, "great", Toast.LENGTH_SHORT).show();
                               name_found.setText(user.getName());
                               user_found.setVisibility(View.VISIBLE);
@@ -75,9 +80,10 @@ DatabaseReference myRef=database.getReference("Users");
      add.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             FirebaseDatabase database1=FirebaseDatabase.getInstance();
-             DatabaseReference reference=database1.getReference("request");
-             reference.child(LocalDatabase.getLocalUid(context)).setValue(user.getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+             AddFriend friend_request=new AddFriend(LocalDatabase.getLocalUid(context),friendUid);
+             reference.child(LocalDatabase.getLocalUid(context)).setValue(friend_request)
+                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                  @Override
                  public void onComplete(@NonNull Task<Void> task) {
                      user_found.setVisibility(View.GONE);
@@ -92,19 +98,39 @@ DatabaseReference myRef=database.getReference("Users");
     {
         public void run()
 
-        {
-            Toast.makeText(OnlineCheckLobby.this,"in runnable",Toast.LENGTH_SHORT).show();
+        {  reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap:dataSnapshot.getChildren())
+                {
+                    Toast.makeText(OnlineCheckLobby.this,"in runnable",Toast.LENGTH_SHORT).show();
+                    AddFriend friend=snap.getValue(AddFriend.class);
+
+                    assert friend != null;
+                    if (friend.recievers_Uid==LocalDatabase.getLocalUid(context))
+                    {
+                        friend_request.setVisibility(View.VISIBLE);
+                        Toast.makeText(context, "wohoo", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
             OnlineCheckLobby.this.mHandler.postDelayed(m_Runnable, 5000);
+
         }
-
-
     };
     @Override
     protected void onPause() {
         super.onPause();
         mHandler.removeCallbacks(m_Runnable);
         finish();
-
     }
 }
