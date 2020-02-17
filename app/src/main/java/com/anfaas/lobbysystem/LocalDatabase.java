@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class LocalDatabase {
-    String name;
+ public static    String name;
     String email;
     String uid;
     int checkLogin;

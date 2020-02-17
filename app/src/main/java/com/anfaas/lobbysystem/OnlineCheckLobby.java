@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ TextView name_found,request_name;
 Handler mHandler;
     Context context ;
     String friendUid;
+    String friend_uid;
 
 FirebaseDatabase database=FirebaseDatabase.getInstance();
 DatabaseReference myRef=database.getReference("Users");
@@ -72,16 +74,26 @@ DatabaseReference myRef=database.getReference("Users");
 
                  @Override
                  public void onCancelled(@NonNull DatabaseError databaseError) {
-
                  }
              });
+            }
+        });
+        accept_req.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase database2=FirebaseDatabase.getInstance();
+                DatabaseReference friends = database2.getReference("Friends");
+                Friends friend=new Friends(friend_uid);
+                friends.child(LocalDatabase.getLocalUid(context)).setValue(friend);
+                Friends me=new Friends(LocalDatabase.getLocalUid(context));
+                friends.child(friend_uid).setValue(me);
             }
         });
      add.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
 
-             AddFriend friend_request=new AddFriend(LocalDatabase.getLocalUid(context),friendUid);
+             AddFriend friend_request=new AddFriend(LocalDatabase.getLocalUid(context),friendUid,LocalDatabase.name);
              reference.child(LocalDatabase.getLocalUid(context)).setValue(friend_request)
                      .addOnCompleteListener(new OnCompleteListener<Void>() {
                  @Override
@@ -103,14 +115,19 @@ DatabaseReference myRef=database.getReference("Users");
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snap:dataSnapshot.getChildren())
                 {
+
                     Toast.makeText(OnlineCheckLobby.this,"in runnable",Toast.LENGTH_SHORT).show();
                     AddFriend friend=snap.getValue(AddFriend.class);
+                    Log.i("check",LocalDatabase.getLocalUid(context).trim());
+                    Log.i("check2",friend.recievers_Uid.trim());
 
-                    assert friend != null;
-                    if (friend.recievers_Uid==LocalDatabase.getLocalUid(context))
-                    {
+                    if (friend.recievers_Uid.trim().equals(LocalDatabase.getLocalUid(context).trim()))
+                    {Log.i("checkdd",LocalDatabase.getLocalUid(context));
+                        request_name.setText(friend.senders_name);
                         friend_request.setVisibility(View.VISIBLE);
+                        friend_uid=friend.senders_Uid;
                         Toast.makeText(context, "wohoo", Toast.LENGTH_SHORT).show();
+                        reference.removeValue();
 
                     }
                 }
