@@ -87,6 +87,7 @@ DatabaseReference myRef=database.getReference("Users");
                 friends.child(LocalDatabase.getLocalUid(context)).setValue(friend);
                 Friends me=new Friends(LocalDatabase.getLocalUid(context));
                 friends.child(friend_uid).setValue(me);
+                friend_request.setVisibility(View.GONE);
             }
         });
      add.setOnClickListener(new View.OnClickListener() {
