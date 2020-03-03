@@ -1,32 +1,29 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
-#include <iostream>
-#include <algorithm>
+#include<iostream>
 using namespace std;
-
-
-int main() {
-        int size;
-        cin>>size;
-        vector<int> v;
-        for (int i=0; i<size; i++) {
-            int x;
-            cin>>x;
-        v.push_back(x);
-        }
-        int del;
-        cin>>del;
-        v.erase(v.begin()+del-1);
-      
-
-        int start,end;
-        cin>>start>>end;
-        v.erase(v.begin()+start,v.end()+end);
-     int   sizee=v.size();
-     for (int x=0; x<sizee; x++) {
-         cout<<v[x]<<" ";
+ template <class c>
+ c big(c a, c b)
+ {
+     if
+         (a < b)
+         cout << b;
+     else
+     {
+         cout << a;
      }
+     return a;
+ }
+ template <class v>
 
-    return 0;
-}
+ void big(v a)
+ {
+    
+     
+         cout << a;
+    
+  
+ }
+ int main()
+ {
+  int x=   big(1.2,33.4);
+  return 0;
+ }

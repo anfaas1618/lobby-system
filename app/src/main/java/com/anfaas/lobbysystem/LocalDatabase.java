@@ -7,7 +7,6 @@ public class LocalDatabase {
  public static    String name;
     String email;
     String uid;
-    int checkLogin;
     Context context;
 
 
